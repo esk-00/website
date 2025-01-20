@@ -41,6 +41,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 600px;
 }
 .main__visual-title {
   position: relative;
@@ -52,16 +53,11 @@ a {
   right: 300px;
   z-index: 10;
 }
-.main__visual-img {
-  position: absolute;
-  top: 5.5rem;
-  z-index: -1;
-  background-color: black;
-  display: inline-block;
-}
-.main__visual-img img {
-  text-align: center;
-  height: 750px;
-  transform: scale(-1, 1);
-  opacity: 0.7;
+
+.box_image {
+  background: url(../../img/nightroad.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 1000px;
 }/*# sourceMappingURL=style.css.map */
