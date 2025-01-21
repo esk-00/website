@@ -49,15 +49,17 @@ a {
   font-size: 3rem;
   font-weight: bold;
   color: #C9A3AF;
-  top: 320px;
   right: 300px;
   z-index: 10;
 }
 
-.box_image {
+.box__image {
   background: url(../../img/nightroad.jpg);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 1000px;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+.box__image-filter {
+  background-color: rgba(0, 0, 0, 0.542);
+  height: 100vh;
 }/*# sourceMappingURL=style.css.map */
