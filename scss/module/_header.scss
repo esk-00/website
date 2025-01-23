@@ -3,13 +3,14 @@
   &__inner {
     display: flex;
     justify-content: space-between;
+    font-family: "Anton", serif;
   }
   &__logo {
-    color: #C9A3AF;
+    color: #ffffff;
     float: left;
     padding: 30px 100px;
     & a {
-      color: #C9A3AF;
+      color: #ffffff;
       font-size: 32px;
     }
   }
