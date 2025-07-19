@@ -1,75 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  background-color: #1F3753;
-  margin: 0;
-  padding: 0;
+    font-family: 'Orbitron', 'Courier New', monospace;
+    background: #000;
+    color: #888888;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-a {
-  text-decoration: none;
+.loading-container {
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
 }
 
-.header {
-  width: 100%;
-}
-.header__inner {
-  display: flex;
-  justify-content: space-between;
-  font-family: "Anton", serif;
-}
-.header__logo {
-  color: #ffffff;
-  float: left;
-  padding: 30px 100px;
-}
-.header__logo a {
-  color: #ffffff;
-  font-size: 32px;
+/* タイピングテキスト */
+.typing-text {
+    font-size: 1.8em;
+    font-weight: 400;
+    color: #888888;
+    margin-bottom: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-.gnav__list {
-  display: flex;
-  list-style: none;
-  padding: 35px 100px;
-}
-.gnav__list-item {
-  color: #ffffff;
-  font-size: 20px;
-  padding: 15px 40px;
-  text-transform: uppercase;
+/* カーソル点滅 */
+.cursor {
+    display: inline-block;
+    background: #888888;
+    width: 3px;
+    height: 1.2em;
+    margin-left: 2px;
+    animation: blink 1s infinite;
 }
 
-.main {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-top: 15%;
-}
-.main__visual-title {
-  position: relative;
-  text-align: center;
-  font-size: 100px;
-  font-family: "Anton", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #ffffff;
-  z-index: 10;
-}
-.main__visual-text {
-  text-align: center;
-  font-size: 70.5px;
-  font-family: "Libre Barcode 39", serif;
-  font-weight: 100px;
-  font-style: normal;
-  color: #ffffff;
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
 }
 
-.box__image {
-  background: url(../../img/nightroad.jpg);
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
+/* プログレスバー */
+.progress-container {
+    margin-bottom: 40px;
 }
-.box__image-filter {
-  background-color: rgba(0, 0, 0, 0.542);
-  height: 100vh;
-}/*# sourceMappingURL=style.css.map */
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(136, 136, 136, 0.2);
+    border: 1px solid rgba(136, 136, 136, 0.3);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #888888;
+    width: 0%;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+/* プログレスバーの光る効果 */
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(200, 200, 200, 0.8), transparent);
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-20px); }
+    100% { transform: translateX(20px); }
+}
+
+/* パーセント表示 */
+.percentage {
+    font-size: 2.5em;
+    font-weight: 400;
+    color: #888888;
+}
+
+/* 完了メッセージ */
+.complete-message {
+    font-size: 1.3em;
+    color: #888888;
+    opacity: 0;
+    margin-top: 30px;
+    transition: opacity 0.5s ease;
+}
+
+.complete-message.show {
+    opacity: 1;
+}
+
+/* メインページフェードイン演出 - 位置移動なし */
+.main-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #111;
+    color: #888888;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+}
+
+.main-page.show {
+    opacity: 1;
+}
+
+/* ローディング画面のフェードアウト - シンプル版 */
+.loading-container.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+@media (max-width: 768px) {
+    .typing-text {
+        font-size: 1.4em;
+        margin-bottom: 40px;
+        height: 50px;
+    }
+    
+    .percentage {
+        font-size: 2em;
+    }
+    
+    .complete-message {
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .typing-text {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+    }
+    
+    .percentage {
+        font-size: 1.8em;
+    }
+}
+
+/* 軽いグリッチエフェクト（完了時のみ） */
+.glitch-effect {
+    animation: glitch 0.3s ease-in-out;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(-1px, -1px); }
+    60% { transform: translate(1px, 1px); }
+    80% { transform: translate(1px, -1px); }
+}
