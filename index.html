@@ -1,113 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <title>Escqpe.mi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Barcode+39&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Barcode+39&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
 
   <body>
     <div class="loading-container">
-        <div class="typing-text">
-            <span id="typed-text"></span>
-            <span class="cursor"></span>
+      <div class="typing-text">
+        <span id="typed-text"></span>
+        <span class="cursor"></span>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
-        
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-            <div class="percentage" id="percentage">0%</div>
-        </div>
-        
-        <div class="complete-message" id="complete-message">
-            CONNECTION ESTABLISHED
-        </div>
+        <div class="percentage" id="percentage">0%</div>
+      </div>
+
+      <div class="complete-message" id="complete-message">CONNECTION ESTABLISHED</div>
     </div>
 
     <!-- メインページのデモ -->
     <div class="main-page" id="main-page">
-        <div>
-            <h1>MAIN PORTFOLIO</h1>
-            <p style="font-size: 0.5em; margin-top: 20px;">メインコンテンツがここに表示されます</p>
-        </div>
+      <div class="main-logo">
+        <img src="./img/logo.png" alt="Escqpe.mi Logo" />
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const typedTextElement = document.getElementById('typed-text');
-            const progressFill = document.getElementById('progress-fill');
-            const percentageElement = document.getElementById('percentage');
-            const completeMessage = document.getElementById('complete-message');
-            const loadingContainer = document.querySelector('.loading-container');
-            const mainPage = document.getElementById('main-page');
-
-            const textToType = "INITIALIZING NEURAL INTERFACE...";
-            let currentCharIndex = 0;
-            let progress = 0;
-
-            // タイピング効果
-            function typeText() {
-                if (currentCharIndex < textToType.length) {
-                    typedTextElement.textContent += textToType[currentCharIndex];
-                    currentCharIndex++;
-                    
-                    // 文字ごとの打鍵間隔をランダムに（80-150ms）
-                    const nextDelay = Math.random() * 70 + 80;
-                    setTimeout(typeText, nextDelay);
-                } else {
-                    // タイピング完了後、カーソルを少し表示してから進行開始
-                    setTimeout(startProgress, 500);
-                }
-            }
-
-            // プログレス開始
-            function startProgress() {
-                const progressInterval = setInterval(() => {
-                    progress += Math.random() * 3 + 1;
-                    
-                    if (progress >= 100) {
-                        progress = 100;
-                        clearInterval(progressInterval);
-                        onComplete();
-                    }
-                    
-                    // プログレスバーとパーセントを更新
-                    progressFill.style.width = progress + '%';
-                    percentageElement.textContent = Math.floor(progress) + '%';
-                }, 100);
-            }
-
-            // 完了処理
-            function onComplete() {
-                // カーソルを非表示
-                document.querySelector('.cursor').style.display = 'none';
-                
-                // グリッチエフェクト
-                typedTextElement.classList.add('glitch-effect');
-                
-                // 完了メッセージ表示
-                setTimeout(() => {
-                    completeMessage.classList.add('show');
-                }, 300);
-                
-                // メインページの表示 - 位置移動なし
-                setTimeout(() => {
-                    // ローディング画面をフェードアウト
-                    loadingContainer.classList.add('fade-out');
-                    
-                    // 同時にメインページをフェードイン
-                    mainPage.classList.add('show');
-                }, 1500);
-            }
-
-            // タイピング開始（少し遅延してから）
-            setTimeout(typeText, 300);
-        });
-    </script>
-</body>
+    <script src="js/loading.js"></script>
+  </body>
 </html>

@@ -1,3 +1,6 @@
 # Pre-commit設定ファイル
 .pre-commit-config.yaml
 .prettierrc
+
+#除外するファイル
+img
