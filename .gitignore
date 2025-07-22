@@ -1,0 +1,3 @@
+# Pre-commit設定ファイル
+.pre-commit-config.yaml
+.prettierrc
