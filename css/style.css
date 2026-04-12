@@ -1,214 +1,190 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: "Orbitron", "Courier New", monospace;
-  background: #000;
-  color: #888888;
+  margin: 0;
   overflow: hidden;
-  height: 100vh;
+  background: #708A8C;
+  color: #F2F1ED;
+  font-family: "Anton", sans-serif;
+}
+
+/* Canvas最初は見せない */
+#webgl {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 0;
+}
+
+/* REC画面 */
+.rec-screen {
+  position: fixed;
+  inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #708A8C;
+  z-index: 10;
 }
 
-.loading-container {
-  text-align: center;
-  width: 90%;
-  max-width: 600px;
+.rec-indicator {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #E47D87;
 }
 
-/* タイピングテキスト */
-.typing-text {
-  font-size: 1.8em;
-  font-weight: 400;
-  color: #888888;
-  margin-bottom: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-/* カーソル点滅 */
-.cursor {
+.rec-dot {
   display: inline-block;
-  background: #888888;
-  width: 3px;
-  height: 1.2em;
-  margin-left: 2px;
-  animation: blink 1s infinite;
+  width: 10px;
+  height: 10px;
+  background: #E47D87;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: blink 2.5s ease-in-out infinite;
 }
 
 @keyframes blink {
-  0%,
-  50% {
-    opacity: 1;
-  }
-  51%,
-  100% {
-    opacity: 0;
-  }
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.2; }
 }
 
-/* プログレスバー */
-.progress-container {
+.recording-text {
+  font-size: 18px;
+  letter-spacing: 4px;
+  opacity: 0.6;
   margin-bottom: 40px;
 }
 
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: rgba(136, 136, 136, 0.2);
-  border: 1px solid rgba(136, 136, 136, 0.3);
+.volume-wrapper {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.volume-label {
+  font-size: 12px;
+  letter-spacing: 4px;
+  opacity: 0.6;
   margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
 }
 
-.progress-fill {
-  height: 100%;
-  background: #888888;
-  width: 0%;
-  transition: width 0.3s ease;
-  position: relative;
-}
-
-/* プログレスバーの光る効果 */
-.progress-fill::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -10px;
-  width: 20px;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(200, 200, 200, 0.8), transparent);
-  animation: shine 1.5s infinite;
-}
-
-@keyframes shine {
-  0% {
-    transform: translateX(-20px);
-  }
-  100% {
-    transform: translateX(20px);
-  }
-}
-
-/* パーセント表示 */
-.percentage {
-  font-size: 2.5em;
-  font-weight: 400;
-  color: #888888;
-}
-
-/* 完了メッセージ */
-.complete-message {
-  font-size: 1.3em;
-  color: #888888;
-  opacity: 0;
-  margin-top: 30px;
-  transition: opacity 0.5s ease;
-}
-
-.complete-message.show {
-  opacity: 1;
-}
-
-/* メインページフェードイン演出 - 位置移動なし */
-.main-page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: #111;
-  color: #888888;
-  opacity: 0;
-  transition: opacity 1s ease-out;
-  z-index: 1000;
-  display: block;
+.slider-row {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 2em;
+  gap: 20px;
 }
 
-.main-page.show {
+.minus, .plus {
+  font-size: 18px;
+  opacity: 0.6;
+  user-select: none;
+}
+
+#volumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 260px;
+  height: 2px;
+  background: #F2F1ED;
+  outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #F2F1ED;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.play-button {
+  margin-top: 60px;
+  font-size: 28px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.play-button:hover {
   opacity: 1;
 }
 
-/* ローディング画面のフェードアウト - シンプル版 */
-.loading-container.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s ease-out;
-}
-@media (max-width: 768px) {
-  .typing-text {
-    font-size: 1.4em;
-    margin-bottom: 40px;
-    height: 50px;
-  }
-
-  .percentage {
-    font-size: 2em;
-  }
-
-  .complete-message {
-    font-size: 1.1em;
-    margin-top: 20px;
-  }
+/* カセット棚のラベル設定 */
+.cassette-rack-labels {
+    position: absolute;
+    top: 135px;
+    left: 350px;
+    width: 500px;
+    z-index: 5;
+    /* pointer-events: none; ← これを削除または auto に変更 */
+    pointer-events: auto;
+    
+    /* 初期状態は透明 */
+    opacity: 0; 
+    transition: opacity 0.25s ease; /* 1秒かけてフワッと出す */
 }
 
-@media (max-width: 480px) {
-  .typing-text {
-    font-size: 1.2em;
-    margin-bottom: 30px;
-  }
-
-  .percentage {
-    font-size: 1.8em;
-  }
+/* モデル読み込み完了後にこのクラスをJSで付与する */
+.cassette-rack-labels.is-visible {
+    opacity: 1;
 }
 
-/* 軽いグリッチエフェクト（完了時のみ） */
-.glitch-effect {
-  animation: glitch 0.3s ease-in-out;
+.cassette-rack-labels {
+    position: absolute;
+    top: 50%; /* 画面中央から見て */
+    left: 50%;
+    
+    /* ABOUTを基準にガッツリ左へ。このtranslateの数値をいじって、
+       3Dモデルの中央基準と合わせます（微調整してください） */
+    transform: translate(-107.5%, -95.5%) scale(var(--rack-scale, 1));
+    transform-origin: center center;
+
+    /* 「完璧に合っているpx数値」で固定 */
+    width: auto; 
+    height: 440px; 
+    
+    display: grid;
+    /* 「完璧に合っているpx数値」をそのまま使う */
+    grid-template-columns: 47px 48px 48px 48px 47px 47px;
+    gap: 51px;
+    
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0; 
+    transition: opacity 0.25s ease;
 }
 
-@keyframes glitch {
-  0%,
-  100% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-2px, 1px);
-  }
-  40% {
-    transform: translate(-1px, -1px);
-  }
-  60% {
-    transform: translate(1px, 1px);
-  }
-  80% {
-    transform: translate(1px, -1px);
-  }
+.cassette-rack-labels.is-visible {
+    opacity: 1;
 }
 
-.main-logo {
-  position: fixed;
-  top: 40%;
-  left: 12%;
-  margin: 0 auto;
-  text-align: left;
+.cassette-rack-labels {
+    position: absolute;
+    
+    /* ここを、あなたが今日一番最初に「完璧だ」と言っていた数値に戻してください */
+    left: calc(50% - (120px + 9.5vw));  /* ← ここ、元の数値は何でしたか？ */
+    top: calc(50% - 21.5vh); /* ← ここも */
+
+    width: 575px;             /* ← これも元の数値に！ */
+    height: 410px;
+
+    /* transform はこのままが一番安定します */
+    transform-origin: center center;
+    transform: translate(-50%, -50%) scale(var(--rack-scale, 1));
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: clamp(10px, 3.75vw, 10.5px);
+    
+    pointer-events: none;
 }
 
-.main-logo-picture {
-  width: 35%;
-  height: auto;
+.label-item {
+    pointer-events: auto;
+    cursor: pointer;
+    background: transparent;
+    height: 110%;
+    align-self: center;
 }
