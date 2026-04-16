@@ -1,7 +1,7 @@
 body {
   margin: 0;
   overflow: hidden;
-  background: #708A8C;
+  background: #47585a;
   color: #F2F1ED;
   font-family: "Anton", sans-serif;
 }
@@ -22,7 +22,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #708A8C;
+  background: #47585a;
   z-index: 10;
 }
 
@@ -170,6 +170,10 @@ body {
     width: 575px;             /* ← これも元の数値に！ */
     height: 410px;
 
+    z-index: 100;
+
+    pointer-events: none;
+
     /* transform はこのままが一番安定します */
     transform-origin: center center;
     transform: translate(-50%, -50%) scale(var(--rack-scale, 1));
@@ -188,3 +192,40 @@ body {
     height: 110%;
     align-self: center;
 }
+
+.inline-panel {
+    position: absolute;
+    right: 21.5%; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    z-index: 200;
+    color: white;
+
+    /* --- ここが重要：最初は完全に消しておく --- */
+    opacity: 0;
+    visibility: hidden; 
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.inline-panel::before {
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -50%); /* 中央寄せ */
+
+    left: 7.5%;
+
+    /* ここで背景のサイズを指定 */
+    width: 450px;
+    height: 700px;
+    
+    background-color: #be6972;
+    z-index: -1; /* 文字の後ろに配置 */
+}
+
+/* activeクラスがついた時だけ表示 */
+.inline-panel.active {
+    opacity: 1;
+    visibility: visible;
+}
+
